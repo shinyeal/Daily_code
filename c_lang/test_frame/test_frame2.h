@@ -46,9 +46,10 @@ struct FuncData *getFuncData(
         void a##_shinyeal_##b(struct TestFuncData *__data)
 
 #define EXPECT(a, b) ({ \
-        printf("%s == %s %s\n", #a, #b, a == b ? "True" : "False");\
+        int temp; \
+        printf("%s == %s %s\n", #a, #b, (temp = (a == b)) ? "True" : "False");\
         __data->total += 1; \
-        __data->expect += 1; \
+        __data->expect += temp; \
 })
 
 
@@ -61,11 +62,20 @@ int RUN_ALL_TEST() {
         ret.next = p;
     }
     FuncData_head = ret.next;
+    char color[3][100] = {
+        "[  \033[1;32m%.2lf%% \033[0m] total : %d expect : %d\n",
+        "[  \033[0;31m%.2lf%% \033[0m] total : %d expect : %d\n",
+        "[  \033[1;31m%.2lf%% \033[0m] total : %d expect : %d\n",
+    };
     for(struct FuncData *p = FuncData_head; p; p = p->next) {
         struct TestFuncData data = {0, 0};
         printf("[%s %s]\n", p->a_str, p->b_str);
         p->func(&data);
-        printf("[ \033[1;32mPASS\033[0m ] total: %d expect_cnt: %d\n", data.total, data.expect);
+        double rate = 1.0 * data.expect / data.total * 100;
+        int ind = 0;
+        if(rate < 100) ind = 1;
+        if(rate < 50) ind = 2;
+        printf(color[ind], 1.0 * data.expect / data.total * 100, data.total, data.expect);
     }
     return 0;
 }
