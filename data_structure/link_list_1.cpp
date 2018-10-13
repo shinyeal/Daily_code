@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 //结构定义
 typedef struct LinkNode {
@@ -83,6 +84,7 @@ void output(LinkList l) {
 }
 
 int main() {
+    srand(time(0));
     LinkList l;
     int length = 0;
     #define MAX 20
