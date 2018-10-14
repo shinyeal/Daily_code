@@ -20,11 +20,11 @@ typedef struct Vector {
     int size, length;
 } Vector;
 
-void *__init(int n) {
+Vector *__init(int n) {
     Vector *p = (Vector *)malloc(sizeof(Vector));
-    v -> data = (int *)malloc(sizeof(int) * n);
-    v -> size = n;
-    v -> length = 0;
+    p -> data = (int *)malloc(sizeof(int) * n);
+    p -> size = n;
+    p -> length = 0;
     return p;
 }
 
@@ -77,13 +77,14 @@ void clear(Vector *v) {
 void output(Vector *v) {
     printf("Vector = [");
     for(int i = 1; i < v -> length; i++) {
-        printf(" %d", v -> data);
+        printf(" %d", v -> data[i]);
     }
     printf("]");
     return ;
 }
 
 int main() {
+    srand(time(0));
     Vector *v = init();
     #define MAX 40
     for(int t = 0;t < MAX; t++) {
