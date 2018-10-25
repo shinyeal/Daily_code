@@ -15,7 +15,7 @@ typedef struct Queue {
 } Queue;
 
 Queue *init(int n) {
-    Queue *q = (Queue)malloc(sizeof(Queue));
+    Queue *q = (Queue *)malloc(sizeof(Queue));
     q -> length = n;
     q -> data = (int *)malloc(sizeof(int) *n);
     q -> head = 0;
@@ -53,7 +53,7 @@ void clear(Queue *q) {
 }
 
 void output(Queue *q) {
-    printf("Queue = [")
+    printf("Queue = [");
     for(int i = q -> head; i <= q -> tail; i++) {
         printf(" %d", q -> data[i]);
         i == q -> tail || printf(",");
@@ -63,17 +63,27 @@ void output(Queue *q) {
 }
 
 int main() {
-    #define MAX 20
+    #define MAX_OP 20
     srand(time(0));
-    Queue *q = init(MAX);
-    for(int i = 0; i <MAX; i++) {
+    Queue *q = init(MAX_OP);
+    for(int i = 0; i < MAX_OP; i++) {
+        //随机三个入队操作和一个出队操作
         int op = rand() % 4, value = rand() % 100;
         switch(op) {
             case 0:
             case 1:
             case 2:
-            case 3: 
+                push(q, value);
+                printf("push %d to queue\n", value);
+                output(q);
+                break;
+            case 3:
+                printf("pop %d from queue\n", front(q));
+                pop(q);
+                output(q);
+                break;
         }
     }
+    return 0;
 }
 
