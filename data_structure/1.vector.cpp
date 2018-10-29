@@ -84,6 +84,7 @@ void output(Vector *v) {
 }
 
 int main() {
+    //随机种子
     srand(time(0));
     Vector *v = init();
     #define MAX 40
