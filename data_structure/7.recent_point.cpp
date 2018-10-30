@@ -44,7 +44,7 @@ void dfs(int u, int father) {
     return;
 }
 
-//lca：交换a, b两个节点的值(异或)
+//lca：交换a, b两个节点(整数)的值(异或)
 int lca(int a, int b) {
     if(dep[b] < dep[a]) {
         a ^= b;
