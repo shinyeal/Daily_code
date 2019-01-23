@@ -19,6 +19,7 @@ UnionSet *init(int n) {
     UnionSet *u = (UnionSet *)calloc(sizeof(UnionSet), 1);
     u->father = (int *)malloc(sizeof(int) *n);
     for(int i = 0; i < n; i++) {
+        //初始化每个节点的父节点都是自己
         u->father[i] = i;
     }
     u->size = n;
@@ -26,13 +27,16 @@ UnionSet *init(int n) {
 }
 
 int find(UnionSet *u, int x) {
+    //如果父节点不是自己，就返回x父节点的父节点编号
     if(u->father[x] != x) return find(u, u->father[x]);
     return x;
 }
 
 int merge(UnionSet *u, int a, int b) {
     int fa = find(u, a), fb = find(u, b);
+    //根节点相同无需合并
     if(fa == fb) return 0;
+    //a节点的坐标改成b，b节点坐标改成a也行
     u->father[fa] = fb;
     return 1;
 }
